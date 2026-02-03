@@ -13,7 +13,28 @@ ItemPedido item3 = new ItemPedido(20, 1, "Caderno");
 pedido.AdcionarPedido(item1);
 pedido.AdcionarPedido(item2);
 pedido.AdcionarPedido(item3);
-Console.WriteLine($"Total do Pedido: R$ {pedido.CalcularTotal()}");
+
+Console.WriteLine("\nItens do Pedido:");
+pedido.ListarPedidos();
+
+double totalPedido = pedido.CalcularTotal();
+Console.WriteLine($"\nTotal do Pedido: {totalPedido}");
+
+pedido.AtualizarPedido(1, new ItemPedido(6, 4, "Lápis de Cor"));
+Console.WriteLine("\nItens do Pedido após atualização:");
+
+pedido.ListarPedidos();
+
+pedido.BuscarPedido("Caderno");
+
+pedido.RemoverPedido(item1);
+Console.WriteLine("\nItens do Pedido após remoção:");
+pedido.ListarPedidos();
+
+pedido.LimparPedidos();
+Console.WriteLine("\nItens do Pedido após limpar:");
+pedido.ListarPedidos();
+
 
 
 
