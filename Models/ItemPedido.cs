@@ -5,22 +5,16 @@ using System.Threading.Tasks;
 
 namespace POO_ClientePedido.Models
 {
-    public class ItemPedido : Pedido
+    public class ItemPedido
     {
-        public int PrecoUnitario { get; set; }
-        public int Quantidade { get; set; }
+        public int IdItem { get; set; } // Adicionando a propriedade IdItem
         public string NomeProduto { get; set; }
-
-        public ItemPedido(int precoUnitario, int quantidade, string nomeProduto)
-        {
-            this.PrecoUnitario = precoUnitario;
-            this.Quantidade = quantidade;
-            this.NomeProduto = nomeProduto;
-        }
+        public double PrecoUnitario { get; set; }
+        public int Quantidade { get; set; }
 
         public double CalcularTotal()
         {
-            return Quantidade * PrecoUnitario;
+            return PrecoUnitario * Quantidade;
         }
     }
 }

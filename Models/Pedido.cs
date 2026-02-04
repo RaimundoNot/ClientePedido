@@ -1,29 +1,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 namespace POO_ClientePedido.Models
 {
     public class Pedido
     {
+        private static int _proximoId = 1; // Gerador de IDs
+
         public int IdPedido { get; private set; }
         public List<ItemPedido> Itens { get; private set; }
 
         public Pedido()
         {
+            IdPedido = _proximoId++; // Cada novo pedido recebe um ID único
             Itens = new List<ItemPedido>();
         }
 
-        public void AdcionarPedido(ItemPedido item)
+        public void AdicionarPedido(ItemPedido item)
         {
+            // Gera um ID único para o item se ele não tiver
+            if (item.IdItem == 0)
+            {
+                item.IdItem = Itens.Count + 1;
+            }
             Itens.Add(item);
         }
 
         public void RemoverPedido(ItemPedido item)
         {
-            Itens.Remove(item);
+            // Busca o item pelo IdItem, não pelo objeto inteiro
+            var itemParaRemover = Itens.FirstOrDefault(i => i.IdItem == item.IdItem);
+            if (itemParaRemover != null)
+            {
+                Itens.Remove(itemParaRemover); // Agora SIM remove
+            }
         }
 
         public void ListarPedidos()
@@ -48,7 +59,7 @@ namespace POO_ClientePedido.Models
             else
             {
                 Console.WriteLine("Índice inválido.");
-            } 
+            }
         }
 
         public void BuscarPedido(string nomeProduto)
@@ -57,7 +68,9 @@ namespace POO_ClientePedido.Models
             {
                 Console.WriteLine("Nenhum item no pedido.");
                 return;
-            } else {
+            }
+            else
+            {
                 var itensEncontrados = Itens.Where(item => item.NomeProduto.Contains(nomeProduto));
                 if (itensEncontrados.Any())
                 {
@@ -65,7 +78,8 @@ namespace POO_ClientePedido.Models
                     {
                         Console.WriteLine($"Produto: {item.NomeProduto}, Preço Unitário: {item.PrecoUnitario}, Quantidade: {item.Quantidade}, Total: {item.CalcularTotal()}");
                     }
-                } else
+                }
+                else
                 {
                     Console.WriteLine("Nenhum item encontrado com o nome fornecido.");
                 }
@@ -74,8 +88,7 @@ namespace POO_ClientePedido.Models
 
         public double CalcularTotal()
         {
-            return Itens.Sum(item => item.CalcularTotal()); ;
+            return Itens.Sum(item => item.CalcularTotal());
         }
     }
-
 }

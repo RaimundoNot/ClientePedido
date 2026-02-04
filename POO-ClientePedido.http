@@ -1,0 +1,6 @@
+@POO_ClientePedido_HostAddress = http://localhost:5029
+
+GET {{POO_ClientePedido_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
